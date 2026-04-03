@@ -1,13 +1,16 @@
 export default function AddTask({ taskList, setTaskList, task, setTask }) {
   const handleSubmit = (e) => {
     e.preventDefault();
+    const taskName = e.target.task.value.trim();
+    if (!taskName) return;
+
     if (task.id) {
       const date = new Date();
       const updatedTaskList = taskList.map((todo) =>
         todo.id === task.id
           ? {
               id: task.id,
-              name: e.target.task.value,
+              name: taskName,
               time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()} `,
             }
           : todo,
@@ -17,12 +20,13 @@ export default function AddTask({ taskList, setTaskList, task, setTask }) {
 
     } else {
       const date = new Date();
-      const task = {
+      const newTask = {
         id: date.getTime(),
-        name: e.target.task.value,
+        name: taskName,
         time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()} `,
       };
-      setTaskList([...taskList, task]);
+      setTaskList([...taskList, newTask]);
+      setTask({});
     }
   };
 

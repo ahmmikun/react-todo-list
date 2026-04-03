@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
 import logo from "../assets/react.svg";
+
+const THEME_KEY = "theme";
+const DEFAULT_THEME = "gTwo";
+
 export default function Header() {
-  const [theme, setTheme] = useState("gTwo");
+  const [theme, setTheme] = useState(() => localStorage.getItem(THEME_KEY) || DEFAULT_THEME);
+
   useEffect(() => {
     document.documentElement.removeAttribute("class");
-   document.documentElement.classList.add(theme);
+    document.documentElement.classList.add(theme);
+    localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
+
   return (
     <>
       <header>
